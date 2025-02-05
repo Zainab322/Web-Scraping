@@ -1,7 +1,4 @@
 # Web-Scraping
-# Web-Scraping
-
-# NeurIPS Paper Scraper
 
 This project provides two scripts to scrape papers from the NeurIPS conference website, save paper details to a text file, and download available PDFs. It includes both a Java implementation and a Python implementation.
 
