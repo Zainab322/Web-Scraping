@@ -1,4 +1,6 @@
-# Web-Scraping
+**WEB SCRAPING AND DATA ANNOTATION WITH LLMs**
+
+# Web-Scraping 
 
 This project provides two scripts to scrape papers from the NeurIPS conference website, save paper details to a text file, and download available PDFs. It includes both a Java implementation and a Python implementation.
 
@@ -50,3 +52,70 @@ python neurips_scraper.py
 - **The Python script scrapes the NeurIPS website for conference papers, year by year.
 - **It saves the title, authors, abstract, and PDF link for each paper in a text file called NeurIPS_Papers.txt.
 - **It will download any available PDFs to a directory called NeurIPS_Papers.
+
+
+
+
+# Research Paper Annotation using LLMs
+
+## Overview
+This project automates the annotation of research papers scraped from NeurIPS (https://papers.nips.cc) using Large Language Models (LLMs). The script assigns a predefined category to each paper based on its title and abstract.
+
+## Features
+- Classifies research papers into five categories:
+  - Deep Learning
+  - NLP
+  - Computer Vision
+  - Reinforcement Learning
+  - Optimization
+- Uses Google Gemini API for text classification.
+- Implements retry logic with exponential backoff for handling API rate limits.
+- Saves the annotated dataset in a structured CSV file.
+
+## Requirements
+Python 3.7+
+Required libraries:
+- google-generativeai
+- pandas
+
+## Setup
+# Install required libraries
+pip install google-generativeai pandas
+
+## API Configuration
+```python
+import google.generativeai as genai
+
+genai.configure(api_key="YOUR_API_KEY_HERE")
+```
+
+## Usage
+# Ensure that 'neurips_papers.csv' exists in the project directory
+python annotate_papers.py
+
+
+## Script Explanation
+```python
+# Load Dataset
+import pandas as pd
+df = pd.read_csv("neurips_papers.csv")
+
+# Classify Papers using Google Gemini API
+def classify_paper_gemini(title, abstract):
+    prompt = f"""
+    Classify the following research paper into one of these categories: {CATEGORIES}.
+    If the category is unclear, pick the closest match.
+    
+    Title: {title}
+    Abstract: {abstract}
+    
+    Just return the category name.
+    """
+    model = genai.GenerativeModel("gemini-pro")
+    response = model.generate_content(prompt)
+    return response.text.strip()
+```
+
+## License
+This project is open-source and available for educational and research purposes.
+
